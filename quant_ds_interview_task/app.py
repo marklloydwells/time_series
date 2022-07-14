@@ -1,4 +1,4 @@
-#%matplotlib qt
+%matplotlib qt
 import pandas as pd
 import numpy as np
 import seaborn as sns
@@ -59,7 +59,7 @@ def simple_arma_model(log_returns, currency = 'EUR/USD'):
     train = log_returns.loc[log_returns.index < pd.to_datetime(split_date)][currency]
     test = log_returns.loc[log_returns.index >= pd.to_datetime(split_date)][currency]
     
-    model = ARIMA(train, order=(1, 0, 1)); # log returns are already cointegrated
+    model = ARIMA(train, order=(1, 0, 5)); # log returns are already cointegrated
     results = model.fit();
     arma_prediction = results.predict(
         start=split_date, end=test.index[-1], dynamic=False);
@@ -115,7 +115,6 @@ def run():
     exog_arma_model(log_returns)
     return df
 
- 
 
 if __name__ == "__main__":
     out = run()
