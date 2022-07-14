@@ -13,6 +13,25 @@ from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
 from sklearn import metrics
 
 def remove_outliers(df, sn, cutoff=5):
+    """
+    Identifies outliers from standardized values and returns dataframe with no
+    outliers.
+    
+    Parameters
+    ----------
+    df : pd.DataFrame
+        raw financial time series.
+    sn : pd.DataFrame
+        standard normalized log returns time series.
+    cutoff : float, optional
+        standard deviation cut-off for identifying outliers. The default is 5.
+
+    Returns
+    -------
+    masked : pd.DataFrame
+        masked and ffilled dataframe containing no outliers.
+
+    """
     cond = sn.abs() >= cutoff
     masked = df.mask(cond).ffill()
     return masked
